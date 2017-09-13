@@ -1,20 +1,122 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container-fluid">
+    <navbar-component></navbar-component>
 
+    <div class="row">
+        <div class="col-10">
+            <div id="table" class="row" [dragula]='"first-bag"' [dragulaModel]="battlefieldZone">
+                <div class="mtg-card" [ng2-draggable]="true" (click)="toggleTap(card)" *ngFor="let card of battlefieldZone" [ngClass]="{'tapped' : card['tapped'], 'untapped' : !card['tapped']}" >
+                    <img *ngIf="card" [src]="card.image || card.lowest_print.image" />
+                </div>
+            </div>
+
+            <div class="row ui-background">
+                <div class="col-lg-8 col-sm-4">
+                    <strong>Hand</strong> (<span>{{handZone.length}}</span>)
+                    <div id="hand-container" class="container-fluid">
+                        <div id="hand" class="row flex-row flex-nowrap card-placeholder" [dragula]='"first-bag"' [dragulaModel]="handZone">
+                            <div class="mtg-card" *ngFor="let card of handZone" (dblclick)="moveZone(card, handZone, battlefieldZone)">
+                                <img *ngIf="card" [src]="card.image || card.lowest_print.image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-sm-2">
+                    <zoneplaceholder-component (onAction)="performAction($event)" [labelText]="'Library'" [zoneArray]="libraryZone"></zoneplaceholder-component>
+                </div>
+                <div class="col-lg-1 col-sm-2">
+                    <zoneplaceholder-component [labelText]="'Graveyard'" [zoneArray]="graveyardZone"></zoneplaceholder-component>
+                </div>
+                <div class="col-lg-1 col-sm-2">
+                    <zoneplaceholder-component [labelText]="'Exile'" [zoneArray]="exileZone"></zoneplaceholder-component>
+                </div>
+                <div class="col-lg-1 col-sm-2">
+                    <zoneplaceholder-component [labelText]="'Sideboard'" [zoneArray]="sideboardZone"></zoneplaceholder-component>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2 ui-background">
+            <sidebar-component (onAction)="performAction($event)"></sidebar-component>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deckModal" tabindex="-1" role="dialog" aria-labelledby="deckModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deckModalLabel">Deck list</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Mainboard:</label>
+                            <textarea class="form-control" rows="15" id="deck-list"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Sideboard:</label>
+                            <textarea class="form-control" rows="15" id="sideboard-list"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-load-deck" type="button" class="btn btn-primary" onclick="loadDeck();">Load</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Shuffle to card Modal -->
+<div class="modal fade" id="shuffleDeckModal" tabindex="-1" role="dialog" aria-labelledby="shuffleDeckModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deckModalLabel">Shuffle to have card in hand</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Card name:</label>
+                    <input type="text" class="form-control" id="shuffle-card-name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="startShuffleDeckToCard();">Shuffle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpModalLabel">Help</h5>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Card shortcuts</h4>
+                <ul>
+                    <li><strong>c</strong>: add counter to card</li>
+                    <li><strong>f</strong>: flip card</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

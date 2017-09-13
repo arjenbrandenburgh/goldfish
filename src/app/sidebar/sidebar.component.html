@@ -1,0 +1,35 @@
+
+<form>
+    <fieldset>
+        <lifecounter-component [labelText]="'Opponent:'"></lifecounter-component>
+        <lifecounter-component [labelText]="'You:'"></lifecounter-component>
+        <lifecounter-component [labelText]="'Custom counter:'"></lifecounter-component>     
+    </fieldset>
+</form>
+
+<label class="control-label">Mana pool:</label>
+<div class="row row-mana">
+    <div class="col-sm-4" [manapool]="'w'"></div>
+    <div class="col-sm-4" [manapool]="'u'"></div>
+    <div class="col-sm-4" [manapool]="'b'"></div>
+</div>
+<div class="row row-mana">
+    <div class="col-sm-4" [manapool]="'r'"></div>
+    <div class="col-sm-4" [manapool]="'g'"></div>
+    <div class="col-sm-4" [manapool]="'c'"></div>
+</div>
+
+<form>
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label">Turn: <span id="turn-counter">{{currentTurn}}</span></label>
+            <button id="btn-next-turn" class="form-control btn btn-primary" (click)="increaseTurn()">
+                Next Turn
+            </button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Actions:</label>
+            <button *ngFor="let button of actionButtons" (click)="sendAction(button.event)" class="form-control btn btn-block" [ngClass]="{'btn-primary' : !button.danger, 'btn-danger' : button.danger }">{{button.name}}</button>
+        </div>
+    </fieldset>
+</form>
