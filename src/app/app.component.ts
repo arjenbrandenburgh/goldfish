@@ -8,6 +8,7 @@ import { Card, Deck } from './interfaces';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  host: {'(window:keydown)': 'hotkeys($event)'},
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
         _dragulaService.setOptions('first-bag', {
             removeOnSpill: false
         });
-      
+
         _dragulaService.dropModel.subscribe((value) => {
           console.log(`drop: ${value[0]}`, value);
         });
@@ -42,9 +43,6 @@ export class AppComponent implements OnInit {
         this._configuration.shuffle(this.libraryZone);
 
         this.drawHand();
-
-        console.log(this.handZone);
-        console.log(this.libraryZone);
     }
 
     public performAction(payload): any {
@@ -69,6 +67,13 @@ export class AppComponent implements OnInit {
               break;
            }
         }
+    }
+
+    private hotkeys($event): any {
+      const hotKey = $event.keyCode;
+      if (hotKey === 68) { // 'd' for 'Draw'
+        this.performAction('draw');
+      }
     }
 
     public toggleTap(card): any {
