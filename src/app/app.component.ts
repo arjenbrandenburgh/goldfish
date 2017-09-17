@@ -51,6 +51,14 @@ export class AppComponent implements OnInit {
               this.drawCard();
               break;
            }
+           case 'shuffle_deck': {
+             this._configuration.shuffle(this.libraryZone);
+             break;
+           }
+           case 'shuffle_hand': {
+             this._configuration.shuffle(this.handZone);
+             break;
+           }
            case 'untap': {
               this.battlefieldZone.forEach(x => x['tapped'] = false);
               break;
