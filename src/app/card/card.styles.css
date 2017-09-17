@@ -1,0 +1,48 @@
+.mtg-card {
+    height: 173px;
+    width: 125px;
+    background-size: cover;
+}
+
+.mtg-card img {
+    width:100%;
+    height:100%;
+}
+
+.mtg-card > .front {
+    perspective: 250px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.tapped {
+	-webkit-transition: transform 0.5s ease;
+	-moz-transition: transform 0.5s ease;
+	-ms-transition: transform 0.5s ease;
+	-o-transition: transform 0.5s ease;
+	transition: transform 0.5s ease;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.untapped {
+	-webkit-transition: transform 0.5s ease;
+	-moz-transition: transform 0.5s ease;
+	-ms-transition: transform 0.5s ease;
+	-o-transition: transform 0.5s ease;
+	transition: transform 0.5s ease;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.marked {
+  -webkit-box-shadow:0 0 20px #c8b472; 
+  -moz-box-shadow: 0 0 20px #c8b472;
+  box-shadow:0 0 20px #c8b472;
+}

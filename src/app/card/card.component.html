@@ -1,0 +1,10 @@
+<div class="mtg-card"
+    (click)="toggleTap()"
+    (dblclick)="doubleClick()"
+    (mouseenter)="mouseOver($event)"
+    (mouseleave)="mouseOver($event)"
+    [ngClass]="{ 'tapped' : tapped, 'untapped' : !tapped, 'marked' : marked }" >
+
+    <img *ngIf="!isBackside()" [src]="card.image || card.lowest_print.image" />
+    <img *ngIf="isBackside()" src="/assets/backside.jpg" />
+</div>

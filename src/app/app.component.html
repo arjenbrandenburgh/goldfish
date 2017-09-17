@@ -4,9 +4,7 @@
     <div class="row">
         <div class="col-10">
             <div id="table" class="row" [dragula]='"first-bag"' [dragulaModel]="battlefieldZone">
-                <div class="mtg-card" [ng2-draggable]="true" (click)="toggleTap(card)" (mouseenter)="mouseOver($event, card, battlefieldZone)" (mouseleave)="mouseOver($event, card, battlefieldZone)" *ngFor="let card of battlefieldZone" [ngClass]="{'tapped' : card['tapped'], 'untapped' : !card['tapped']}" >
-                    <img *ngIf="card" [src]="card.image || card.lowest_print.image" />
-                </div>
+                <card-component *ngFor="let card of battlefieldZone" (onAction)="performAction($event)" [zoneName]="'Battlefield'" [card]="card" [ng2-draggable]="true"></card-component>
             </div>
 
             <div class="row ui-background">
@@ -14,23 +12,21 @@
                     <strong>Hand</strong> (<span>{{handZone.length}}</span>)
                     <div id="hand-container" class="container-fluid">
                         <div id="hand" class="row flex-row flex-nowrap card-placeholder" [dragula]='"first-bag"' [dragulaModel]="handZone">
-                            <div class="mtg-card" *ngFor="let card of handZone" (mouseenter)="mouseOver($event, card, handZone)" (mouseleave)="mouseOver($event, card, handZone)" (dblclick)="moveZone(card, handZone, battlefieldZone)">
-                                <img *ngIf="card" [src]="card.image || card.lowest_print.image" />
-                            </div>
+                          <card-component *ngFor="let card of handZone" (onAction)="performAction($event)" [zoneName]="'Hand'" [card]="card"></card-component>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component (onAction)="performAction($event)" [labelText]="'Library'" [zoneArray]="libraryZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Library'" [zoneArray]="libraryZone"></zoneplaceholder-component>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component [labelText]="'Graveyard'" [zoneArray]="graveyardZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Graveyard'" [zoneArray]="graveyardZone"></zoneplaceholder-component>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component [labelText]="'Exile'" [zoneArray]="exileZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Exile'" [zoneArray]="exileZone"></zoneplaceholder-component>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component [labelText]="'Sideboard'" [zoneArray]="sideboardZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Sideboard'" [zoneArray]="sideboardZone"></zoneplaceholder-component>
                 </div>
             </div>
         </div>

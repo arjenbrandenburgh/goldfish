@@ -21,8 +21,6 @@ export class AppComponent implements OnInit {
     sideboardZone = [];
     battlefieldZone = [];
 
-    activeCard: any;
-    activeZone: any;
     lastNumberOfCardsInHand: number = 7;
 
     constructor(private readonly _configuration: Configuration,
@@ -47,11 +45,16 @@ export class AppComponent implements OnInit {
         this.drawHand();
     }
 
-    public performAction(payload): any {
-        switch (payload) {
+    public performAction(event): any {
+        const eventName = event.name || event;
+        switch (eventName) {
            case 'draw': {
               this.drawCard();
               break;
+           }
+           case 'movezone': {
+             this.moveZone(event);
+             break;
            }
            case 'shuffle_deck': {
              this._configuration.shuffle(this.libraryZone);
@@ -84,34 +87,31 @@ export class AppComponent implements OnInit {
       if (hotKey === 68) { // 'd' for 'Draw'
         this.performAction('draw');
       }
-      else if (hotKey === 69 && this.activeCard) { // 'e' for 'Exile'
-        this.moveZone(this.activeCard, this.activeZone, this.exileZone);
-      }
-      else if (hotKey === 71 && this.activeCard) { // 'g' for 'Graveyard'
-          this.moveZone(this.activeCard, this.activeZone, this.graveyardZone);
-      }
     }
 
-    public mouseOver($event, card, zone): any {
-      if ($event.type === 'mouseenter'){
-        this.activeCard = card;
-        this.activeZone = zone;
-      } else if ($event.type === 'mouseleave') {
-        this.activeCard = null;
-        this.activeZone = null;
+    public moveZone(event): any {
+      const source = this.getZone(event.source);
+      const target = this.getZone(event.target);
+      const index = source.indexOf(event.card, 0);
+      if (index > -1) {
+          source.splice(index, 1);
+          target.unshift(event.card);
       }
     }
 
-    public toggleTap(card): any {
-        const tapped = card['tapped'] || false;
-        card['tapped'] = !tapped;
-    }
-
-    public moveZone(card, source, target): any {
-        const index = source.indexOf(card, 0);
-        if (index > -1) {
-            source.splice(index, 1);
-            target.push(card);
+    private getZone(zoneName): any {
+        if (zoneName === 'Hand') {
+          return this.handZone;
+        } else if (zoneName === 'Battlefield') {
+          return this.battlefieldZone;
+        } else if (zoneName === 'Exile') {
+          return this.exileZone;
+        } else if (zoneName === 'Graveyard') {
+          return this.graveyardZone;
+        } else if (zoneName === 'Library') {
+          return this.libraryZone;
+        } else if (zoneName === 'Sideboard') {
+          return this.sideboardZone;
         }
     }
 

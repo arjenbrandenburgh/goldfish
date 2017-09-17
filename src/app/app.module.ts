@@ -8,12 +8,14 @@ import { Draggable } from './draggable/draggable.directive';
 import { SidebarModule } from './sidebar/sidebar.module';
 
 import { AppComponent } from './app.component';
+import { CardComponent } from './card/card.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ZonePlaceholderComponent } from './zoneplaceholder/zoneplaceholder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CardComponent,
     Draggable,
     NavbarComponent,
     ZonePlaceholderComponent
