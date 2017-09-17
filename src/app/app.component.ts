@@ -95,7 +95,12 @@ export class AppComponent implements OnInit {
       const index = source.indexOf(event.card, 0);
       if (index > -1) {
           source.splice(index, 1);
-          target.unshift(event.card);
+
+          if (event.notes === 'bottom') {
+            target.push(event.card);
+          } else {
+            target.unshift(event.card);
+          }
       }
     }
 

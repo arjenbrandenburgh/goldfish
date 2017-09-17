@@ -26,17 +26,26 @@ export class CardComponent {
 
   private hotkeys($event): any {
     const hotKey = $event.keyCode;
-    if (hotKey === 69 && this.active) { // 'e' for 'Exile'
-      this.moveZone(this.zoneName, 'Exile');
-    }
-    else if (hotKey === 71 && this.active) { // 'g' for 'Graveyard'
-      this.moveZone(this.zoneName, 'Graveyard');
-    }
-    else if (hotKey === 76 && this.active) { // 'l' for 'Library' (put on top)
-      this.moveZone(this.zoneName, 'Library');
-    }
-    else if (hotKey === 77 && this.active) { // 'm' for 'marked'
-      this.marked = !this.marked;
+    // console.log(hotKey);
+    if (this.active) {
+      if (hotKey === 66) { // 'b' for 'bottom of library'
+        this.moveZone(this.zoneName, 'Library', 'bottom');
+      }
+      else if (hotKey === 69) { // 'e' for 'Exile'
+        this.moveZone(this.zoneName, 'Exile');
+      }
+      else if (hotKey === 70) { // 'f' for 'flipped'
+        this.flipped = !this.flipped
+      }
+      else if (hotKey === 71) { // 'g' for 'Graveyard'
+        this.moveZone(this.zoneName, 'Graveyard');
+      }
+      else if (hotKey === 76) { // 'l' for 'Library' (put on top)
+        this.moveZone(this.zoneName, 'Library');
+      }
+      else if (hotKey === 77) { // 'm' for 'marked'
+        this.marked = !this.marked;
+      }
     }
   }
 
@@ -62,12 +71,13 @@ export class CardComponent {
     this.active = ($event.type === 'mouseenter');
   }
 
-  public moveZone(source, target): any {
+  public moveZone(source, target, notes = null): any {
     const moveAction = {
       name: 'movezone',
       card: this.card,
       source: source,
-      target: target
+      target: target,
+      notes: notes
     }
     this.onAction.next(moveAction);
   }

@@ -9,6 +9,10 @@
     height: 200px;
 }
 
+card-component {
+  height: 173px;
+}
+
 .ui-background {
     background-image: url("/assets/playbg1.png");
     color: #c8b472;

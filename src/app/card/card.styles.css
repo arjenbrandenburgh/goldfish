@@ -1,7 +1,7 @@
 .mtg-card {
     height: 173px;
     width: 125px;
-    background-size: cover;
+    position: relative;
 }
 
 .mtg-card img {
@@ -42,7 +42,70 @@
 }
 
 .marked {
-  -webkit-box-shadow:0 0 20px #c8b472; 
+  -webkit-box-shadow:0 0 20px #c8b472;
   -moz-box-shadow: 0 0 20px #c8b472;
   box-shadow:0 0 20px #c8b472;
+}
+
+.flipping-image .image {
+    display: block;
+    position: relative;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    -ms-perspective: 1000px;
+    -o-perspective: 1000px;
+    perspective: 1000px;
+}
+
+.flipping-image .image .side {
+    display: block;
+    position: relative;
+    z-index: 1;
+    -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    -webkit-backface-visibility: hidden;
+    -moz-transition: -moz-transform 0.5s ease-in-out;
+    -moz-backface-visibility: hidden;
+    -ms-transition: -ms-transform 0.5s ease-in-out;
+    -ms-backface-visibility: hidden;
+    -o-transition: -o-transform 0.5s ease-in-out;
+    -o-backface-visibility: hidden;
+    transition: transform 0.5s ease-in-out;
+    backface-visibility: hidden;
+}
+
+.flipping-image .image .side.front {
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+    -ms-transform: rotateY(0);
+    -o-transform: rotateY(0);
+    transform: rotateY(0);
+}
+
+.flipping-image .image .side.back {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.flipping-image.flipped .image .front {
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+}
+
+.flipping-image.flipped .image .back {
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+    -ms-transform: rotateY(0);
+    -o-transform: rotateY(0);
+    transform: rotateY(0);
 }
