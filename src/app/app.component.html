@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-10">
             <div id="table" class="row" [dragula]='"first-bag"' [dragulaModel]="battlefieldZone">
-                <div class="mtg-card" [ng2-draggable]="true" (click)="toggleTap(card)" *ngFor="let card of battlefieldZone" [ngClass]="{'tapped' : card['tapped'], 'untapped' : !card['tapped']}" >
+                <div class="mtg-card" [ng2-draggable]="true" (click)="toggleTap(card)" (mouseenter)="mouseOver($event, card, battlefieldZone)" (mouseleave)="mouseOver($event, card, battlefieldZone)" *ngFor="let card of battlefieldZone" [ngClass]="{'tapped' : card['tapped'], 'untapped' : !card['tapped']}" >
                     <img *ngIf="card" [src]="card.image || card.lowest_print.image" />
                 </div>
             </div>
@@ -14,7 +14,7 @@
                     <strong>Hand</strong> (<span>{{handZone.length}}</span>)
                     <div id="hand-container" class="container-fluid">
                         <div id="hand" class="row flex-row flex-nowrap card-placeholder" [dragula]='"first-bag"' [dragulaModel]="handZone">
-                            <div class="mtg-card" *ngFor="let card of handZone" (dblclick)="moveZone(card, handZone, battlefieldZone)">
+                            <div class="mtg-card" *ngFor="let card of handZone" (mouseenter)="mouseOver($event, card, handZone)" (mouseleave)="mouseOver($event, card, handZone)" (dblclick)="moveZone(card, handZone, battlefieldZone)">
                                 <img *ngIf="card" [src]="card.image || card.lowest_print.image" />
                             </div>
                         </div>

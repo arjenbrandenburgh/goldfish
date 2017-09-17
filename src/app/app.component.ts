@@ -21,6 +21,8 @@ export class AppComponent implements OnInit {
     sideboardZone = [];
     battlefieldZone = [];
 
+    activeCard: any;
+    activeZone: any;
     lastNumberOfCardsInHand: number = 7;
 
     constructor(private readonly _configuration: Configuration,
@@ -81,6 +83,22 @@ export class AppComponent implements OnInit {
       const hotKey = $event.keyCode;
       if (hotKey === 68) { // 'd' for 'Draw'
         this.performAction('draw');
+      }
+      else if (hotKey === 69 && this.activeCard) { // 'e' for 'Exile'
+        this.moveZone(this.activeCard, this.activeZone, this.exileZone);
+      }
+      else if (hotKey === 71 && this.activeCard) { // 'g' for 'Graveyard'
+          this.moveZone(this.activeCard, this.activeZone, this.graveyardZone);
+      }
+    }
+
+    public mouseOver($event, card, zone): any {
+      if ($event.type === 'mouseenter'){
+        this.activeCard = card;
+        this.activeZone = zone;
+      } else if ($event.type === 'mouseleave') {
+        this.activeCard = null;
+        this.activeZone = null;
       }
     }
 
