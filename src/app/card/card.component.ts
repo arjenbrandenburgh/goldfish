@@ -46,6 +46,9 @@ export class CardComponent {
       else if (hotKey === 77) { // 'm' for 'marked'
         this.marked = !this.marked;
       }
+      else if (hotKey === 84) { // 't' for 'tapped'
+        this.toggleTap();
+      }
     }
   }
 
