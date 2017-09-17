@@ -6,8 +6,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         <strong>{{labelText}}</strong> (<span>{{zoneArray.length}}</span>)
         <div class="zone-placeholder card-placeholder" [ngClass]="{'deck-placeholder' : isLibrary}" [dragula]='"first-bag"' [dragulaModel]="zoneArray">
             <div class="mtg-card" *ngFor="let card of zoneArray">
-                <img *ngIf="!isLibrary" [src]="card.image || card.lowest_print.image" />
-                <img *ngIf="isLibrary" src="/assets/backside.jpg" (dblclick)="drawCard()"/>
+                <img *ngIf="!isLibrary()" [src]="card.image || card.lowest_print.image" />
+                <img *ngIf="isLibrary()" src="/assets/backside.jpg" (dblclick)="drawCard()"/>
             </div>
         </div>`,
      styles: [ `
@@ -21,7 +21,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 			overflow:hidden;
 		}
 	` ]
-    
+
 })
 
 export class ZonePlaceholderComponent {
