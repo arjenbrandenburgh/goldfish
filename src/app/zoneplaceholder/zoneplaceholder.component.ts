@@ -5,7 +5,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     template: `
         <strong>{{zoneName}}</strong> (<span>{{zoneArray.length}}</span>)
         <div class="zone-placeholder card-placeholder"
-            (dbclick)="drawCard()"
             [ngClass]="{'deck-placeholder' : isLibrary}"
             [dragula]='"first-bag"'
             [dragulaModel]="zoneArray">
