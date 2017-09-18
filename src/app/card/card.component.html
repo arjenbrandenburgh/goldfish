@@ -5,15 +5,14 @@
     (mouseleave)="mouseOver($event)"
     [ngClass]="{ 'tapped' : tapped, 'untapped' : !tapped, 'marked' : marked }" >
 
-    <div *ngIf="!isBackside()" class="flipping-image" [ngClass]="{ 'flipped' : flipped }">
+    <div class="flipping-image" [ngClass]="{ 'flipped' : flipped }">
       <div class="image">
         <div class="side front">
           <img [src]="card.image || card.lowest_print.image">
         </div>
         <div class="side back">
-          <img src="/assets/backside.jpg">
+          <img [src]="backsideImage()" />
         </div>
       </div>
     </div>
-    <img *ngIf="isBackside()" src="/assets/backside.jpg" />
 </div>

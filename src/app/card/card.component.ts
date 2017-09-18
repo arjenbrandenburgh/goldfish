@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { SharedService } from './../services/shared.service';
 import { Card } from '../interfaces';
@@ -10,13 +10,12 @@ import { Card } from '../interfaces';
     styleUrls: [ './card.styles.css' ]
 })
 
-export class CardComponent {
+export class CardComponent implements OnInit {
   @Input() card: Card;
   @Input() zoneName: string;
 
   tapped: boolean = false;
   flipped: boolean = false;
-  backside: boolean = false;
   active: boolean = false;
   marked: boolean = false;
 
@@ -24,6 +23,12 @@ export class CardComponent {
     this._sharedService.actionEmitter.subscribe((event) => {
       this.performAction(event);
     });
+  }
+
+  ngOnInit() {
+    if (this.zoneName === 'Library') {
+      this.flipped = true;
+    }
   }
 
   private hotkeys($event): any {
@@ -37,7 +42,10 @@ export class CardComponent {
         this.moveZone(this._sharedService.exileZone);
       }
       else if (hotKey === 70) { // 'f' for 'flipped'
-        this.flipped = !this.flipped
+        if (this.zoneName === 'Library' || this.zoneName === 'Hand' || this.zoneName === 'Battlefield') {
+          // Only flip if we're in the Library, Hand or Battlefield
+          this.flipped = !this.flipped
+        }
       }
       else if (hotKey === 71) { // 'g' for 'Graveyard'
         this.moveZone(this._sharedService.graveyardZone);
@@ -85,8 +93,15 @@ export class CardComponent {
     }
   }
 
-  public isBackside(): boolean {
-    return (this.zoneName === 'Library');
+  public backsideImage(): string {
+    // When a card is in hand or in library, we do not want to show the flip-side of a card
+    if (this.zoneName !== 'Hand' && this.zoneName !== 'Library') {
+      if (this.card.image_flip || this.card.lowest_print.image_flip) {
+        return this.card.image_flip || this.card.lowest_print.image_flip;
+      }
+    }
+
+    return './assets/backside.jpg';
   }
 
   public mouseOver($event): any {

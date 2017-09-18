@@ -6,8 +6,12 @@ export interface Archetype {
 export interface Card {
     goldfishId: string;
     name: string;
-    lowest_print: number;
+    lowest_print: {
+      image: string;
+      image_flip: string;
+    };
     image: string;
+    image_flip: string;
 }
 
 export interface Deck {
