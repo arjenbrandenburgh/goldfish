@@ -10,7 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
             [dragula]='"first-bag"'
             [dragulaModel]="zoneArray">
 
-            <card-component (onAction)="forwardAction($event)" *ngFor="let card of zoneArray" [card]="card" [zoneName]="zoneName"></card-component>
+            <card-component *ngFor="let card of zoneArray" [card]="card" [zoneName]="zoneName"></card-component>
         </div>`,
      styles: [ `
 		.zone-placeholder {
@@ -29,13 +29,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ZonePlaceholderComponent {
 	@Input() zoneName: string;
 	@Input() zoneArray: any[] = [];
-	@Output() onAction = new EventEmitter();
 
 	public isLibrary(): boolean {
 		return this.zoneName === 'Library';
 	}
-
-  public forwardAction(event): any {
-    this.onAction.next(event);
-  }
 }

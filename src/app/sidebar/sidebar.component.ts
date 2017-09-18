@@ -1,5 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
+import { SharedService } from './../services/shared.service';
+
 @Component({
     selector: 'sidebar-component',
     templateUrl: './sidebar.component.html',
@@ -7,7 +9,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 
 export class SidebarComponent {
-    @Output() onAction: EventEmitter<string> = new EventEmitter<string>();
     currentTurn: number = 1;
 
     actionButtons = [{
@@ -24,7 +25,7 @@ export class SidebarComponent {
         event: 'mulligan'
     }, {
         name: 'Untap All',
-        event: 'untap'
+        event: 'untap_all'
     }, {
         name: 'Flip Hand',
         event: 'flip_hand'
@@ -34,11 +35,13 @@ export class SidebarComponent {
         danger: true
     }];
 
+    constructor(private readonly _sharedService: SharedService) { }
+
     public increaseTurn(): void {
         this.currentTurn++;
     }
 
     public sendAction(action: string): void {
-        this.onAction.emit(action);
+        this._sharedService.actionEmitter.emit(action);
     }
 }

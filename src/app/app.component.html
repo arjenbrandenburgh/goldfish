@@ -3,36 +3,36 @@
 
     <div class="row">
         <div class="col-10">
-            <div id="table" class="row" [dragula]='"first-bag"' [dragulaModel]="battlefieldZone">
-                <card-component *ngFor="let card of battlefieldZone" (onAction)="performAction($event)" [zoneName]="'Battlefield'" [card]="card" [ng2-draggable]="true"></card-component>
+            <div id="table" class="row" [dragula]='"first-bag"' [dragulaModel]="_sharedService.battlefieldZone">
+                <card-component *ngFor="let card of _sharedService.battlefieldZone" [zoneName]="'Battlefield'" [card]="card" [ng2-draggable]="true"></card-component>
             </div>
 
             <div class="row ui-background">
                 <div class="col-lg-8 col-sm-4">
-                    <strong>Hand</strong> (<span>{{handZone.length}}</span>)
+                    <strong>Hand</strong> (<span>{{_sharedService.handZone.length}}</span>)
                     <div id="hand-container" class="container-fluid">
-                        <div id="hand" class="row flex-row flex-nowrap card-placeholder" [dragula]='"first-bag"' [dragulaModel]="handZone">
-                          <card-component *ngFor="let card of handZone" (onAction)="performAction($event)" [zoneName]="'Hand'" [card]="card"></card-component>
+                        <div id="hand" class="row flex-row flex-nowrap card-placeholder" [dragula]='"first-bag"' [dragulaModel]="_sharedService.handZone">
+                          <card-component *ngFor="let card of _sharedService.handZone" [zoneName]="'Hand'" [card]="card"></card-component>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Library'" [zoneArray]="libraryZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component [zoneName]="'Library'" [zoneArray]="_sharedService.libraryZone"></zoneplaceholder-component>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Graveyard'" [zoneArray]="graveyardZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component [zoneName]="'Graveyard'" [zoneArray]="_sharedService.graveyardZone"></zoneplaceholder-component>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Exile'" [zoneArray]="exileZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component [zoneName]="'Exile'" [zoneArray]="_sharedService.exileZone"></zoneplaceholder-component>
                 </div>
                 <div class="col-lg-1 col-sm-2">
-                    <zoneplaceholder-component (onAction)="performAction($event)" [zoneName]="'Sideboard'" [zoneArray]="sideboardZone"></zoneplaceholder-component>
+                    <zoneplaceholder-component [zoneName]="'Sideboard'" [zoneArray]="_sharedService.sideboardZone"></zoneplaceholder-component>
                 </div>
             </div>
         </div>
 
         <div class="col-2 ui-background">
-            <sidebar-component (onAction)="performAction($event)"></sidebar-component>
+            <sidebar-component></sidebar-component>
         </div>
 
     </div>

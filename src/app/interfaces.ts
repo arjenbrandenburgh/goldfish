@@ -4,7 +4,7 @@ export interface Archetype {
 }
 
 export interface Card {
-    id: number;
+    goldfishId: string;
     name: string;
     lowest_print: number;
     image: string;
@@ -14,8 +14,8 @@ export interface Deck {
     id: number;
     name: string;
     date: number;
-    mainboard: any;
-    sideboard: any;
+    mainboard: any[];
+    sideboard: any[];
     format: Format;
     archetype: Archetype;
     commander: Card;

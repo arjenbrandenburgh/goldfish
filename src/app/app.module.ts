@@ -6,6 +6,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { Draggable } from './draggable/draggable.directive';
 
 import { SidebarModule } from './sidebar/sidebar.module';
+import { SharedService } from './services/shared.service';
 
 import { AppComponent } from './app.component';
 import { CardComponent } from './card/card.component';
@@ -26,7 +27,8 @@ import { ZonePlaceholderComponent } from './zoneplaceholder/zoneplaceholder.comp
     SidebarModule
   ],
   providers: [
-  	Configuration
+  	Configuration,
+    SharedService
   ],
   bootstrap: [AppComponent]
 })
